@@ -1,6 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 
-export class CreatePokemonDto {
+export class PokemonDto {
   @IsNumber()
   public id: number;
 
