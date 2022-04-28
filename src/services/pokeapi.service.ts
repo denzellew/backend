@@ -1,5 +1,5 @@
 import { PokemonDto } from '@/dtos/pokemon.dto';
-import { PokeApiSpeciesReponse, PokeApiSpecies, Pokemon } from '@/interfaces/pokemon.interface';
+import { PokeApiSpeciesReponse, PokeApiSpecies } from '@/interfaces/pokemon.interface';
 import axios, { AxiosResponse } from 'axios';
 
 class PokeApiService {
@@ -21,3 +21,5 @@ class PokeApiService {
     return data;
   }
 }
+
+export default PokeApiService;
