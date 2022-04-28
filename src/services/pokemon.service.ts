@@ -1,4 +1,4 @@
-import { CreatePokemonDto } from '@dtos/pokemon.dto';
+import { PokemonDto } from '@dtos/pokemon.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { Pokemon } from '@interfaces/pokemon.interface';
 import pokemonModel from '@models/pokemon.model';
@@ -24,7 +24,7 @@ class PokemonService {
     return findPokemon;
   }
 
-  public async createManyPokemon(pokemonDtos: CreatePokemonDto[]): Promise<void> {
+  public async createManyPokemon(pokemonDtos: PokemonDto[]): Promise<void> {
     if (isEmpty(pokemonDtos)) throw new HttpException(400, 'There are no pokemon to create');
 
     // Create bulk upsert operation for refresh
