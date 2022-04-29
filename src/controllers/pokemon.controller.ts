@@ -21,8 +21,11 @@ class PokemonController {
 
   public getPokemon = async (req: Request, res: Response, next: NextFunction) => {
     const nameQuery = String(req.query.name) ?? '';
-    const limit = Number(req.query.limit ?? 20);
+    let limit = Number(req.query.limit ?? 20);
     const offset = Number(req.query.offset ?? 0);
+
+    // Max Page Size is 100
+    limit = limit > 100 ? 100 : limit;
 
     try {
       const findManyPokemon: PokemonDto[] = await this.pokemonService.findPokemon(nameQuery, limit, offset);
