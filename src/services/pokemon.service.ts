@@ -8,7 +8,6 @@ class PokemonService {
   public pokemonModel = pokemonModel;
 
   public async findPokemon(query: string, limit?: number, offset?: number): Promise<PokemonDto[]> {
-    console.log(query);
     const filter = isEmpty(query) || query == 'undefined' || query === '' ? {} : { name: { $regex: `${query}`, $options: 'i' } };
     limit = isEmpty(limit) ? 20 : limit;
     offset = isEmpty(offset) ? 0 : offset;
