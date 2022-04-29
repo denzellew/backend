@@ -1,4 +1,4 @@
-import { PokemonDto } from '@dtos/pokemon.dto';
+import { PokemonDto, PokemonQueryDto } from '@dtos/pokemon.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { Pokemon } from '@interfaces/pokemon.interface';
 import pokemonModel from '@models/pokemon.model';
@@ -7,14 +7,27 @@ import { isEmpty } from '@utils/util';
 class PokemonService {
   public pokemonModel = pokemonModel;
 
-  public async findPokemon(query: string, limit?: number, offset?: number): Promise<PokemonDto[]> {
+  public async findPokemon(query: string, limit?: number, offset?: number): Promise<PokemonQueryDto> {
     const filter = isEmpty(query) || query == 'undefined' || query === '' ? {} : { name: { $regex: `${query}`, $options: 'i' } };
     limit = isEmpty(limit) ? 20 : limit;
     offset = isEmpty(offset) ? 0 : offset;
+
+    // Get Count
+    const pokemonQueryCount = await this.pokemonModel.where(filter).countDocuments();
+
+    // Get offset and limited list
     const pokemonList: Pokemon[] = await this.pokemonModel.find(filter).limit(limit).skip(offset).sort({ _id: 'asc' }).exec();
-    return pokemonList.map<PokemonDto>(d => {
+
+    // Map to dto
+    const pokemonDtos = pokemonList.map<PokemonDto>(d => {
       return <PokemonDto>{ id: d._id, name: d.name };
     });
+
+    // Return pokmeon
+    return {
+      count: pokemonQueryCount,
+      data: pokemonDtos,
+    };
   }
 
   public async findPokemonById(pokemonId: string): Promise<PokemonDto> {

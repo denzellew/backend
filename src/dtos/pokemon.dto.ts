@@ -7,3 +7,8 @@ export class PokemonDto {
   @IsString()
   public name: string;
 }
+
+export class PokemonQueryDto {
+  public count: number;
+  public data: PokemonDto[];
+}

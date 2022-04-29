@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { PokemonDto } from '@dtos/pokemon.dto';
+import { PokemonDto, PokemonQueryDto } from '@dtos/pokemon.dto';
 import { Pokemon } from '@interfaces/pokemon.interface';
 import PokemonService from '@services/pokemon.service';
 import PokeApiService from '@services/pokeapi.service';
@@ -28,8 +28,8 @@ class PokemonController {
     limit = limit > 100 ? 100 : limit;
 
     try {
-      const findManyPokemon: PokemonDto[] = await this.pokemonService.findPokemon(nameQuery, limit, offset);
-      res.status(200).json({ data: findManyPokemon });
+      const queryResult: PokemonQueryDto = await this.pokemonService.findPokemon(nameQuery, limit, offset);
+      res.status(200).json(queryResult);
     } catch (error) {
       next(error);
     }
