@@ -13,8 +13,9 @@ class PokemonRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.pokemonController.getPokemon);
-    this.router.get(`${this.path}/:id`, this.pokemonController.getPokemonById);
     this.router.post(`${this.path}/refresh`, this.pokemonController.refreshPokemon);
+    this.router.delete(`${this.path}/all`, this.pokemonController.deleteAllPokemon);
+    this.router.get(`${this.path}/:id`, this.pokemonController.getPokemonById);
     this.router.delete(`${this.path}/:id`, this.pokemonController.deletePokemon);
   }
 }

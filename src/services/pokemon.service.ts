@@ -48,6 +48,11 @@ class PokemonService {
 
     return deletePokemonById;
   }
+
+  public async deleteAllPokemon(): Promise<boolean> {
+    await this.pokemonModel.deleteMany({});
+    return true;
+  }
 }
 
 export default PokemonService;

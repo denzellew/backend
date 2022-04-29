@@ -26,7 +26,7 @@ class PokemonController {
 
     try {
       const findManyPokemon: PokemonDto[] = await this.pokemonService.findPokemon(nameQuery, limit, offset);
-      res.status(200).json({ data: findManyPokemon, message: 'findOne' });
+      res.status(200).json({ data: findManyPokemon });
     } catch (error) {
       next(error);
     }
@@ -37,7 +37,7 @@ class PokemonController {
       const pokemonId: string = req.params.id;
       const findOnePokemonData: PokemonDto = await this.pokemonService.findPokemonById(pokemonId);
 
-      res.status(200).json({ data: findOnePokemonData, message: 'findOne' });
+      res.status(200).json({ data: findOnePokemonData });
     } catch (error) {
       next(error);
     }
@@ -49,6 +49,16 @@ class PokemonController {
       const deletePokemonData: Pokemon = await this.pokemonService.deletePokemon(pokemonId);
 
       res.status(200).json({ data: deletePokemonData, message: 'deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deleteAllPokemon = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.pokemonService.deleteAllPokemon();
+
+      res.status(200).json({ message: 'all pokemon deleted' });
     } catch (error) {
       next(error);
     }
